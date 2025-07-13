@@ -1,0 +1,72 @@
+openapi: 3.1.0
+info:
+  title: LINE WORKS Auth API
+  version: '1.0'
+servers:
+  - url: 'https://auth.worksmobile.com'
+    description: AuthURL
+paths:
+  /login/login:
+    get:
+      summary: Get Login Page
+      tags: []
+      responses: {}
+      operationId: get-login-page
+  /login/loginProcessV2:
+    post:
+      summary: Login Process V2
+      operationId: login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+          headers: {}
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        description: ''
+      description: ''
+components:
+  schemas:
+    LoginRequest:
+      title: LoginRequest
+      type: object
+      properties:
+        inputId:
+          type: string
+        password:
+          type: string
+        keepLoginYn:
+          type: string
+          enum:
+            - 'Y'
+            - 'N'
+          default: 'Y'
+        rememberIdYn:
+          type: string
+          enum:
+            - 'Y'
+            - 'N'
+          default: 'Y'
+        accessUrl:
+          type: string
+          default: 'https://talk.worksmobile.com'
+      required:
+        - inputId
+        - password
+        - keepLoginYn
+        - rememberIdYn
+        - accessUrl
+    LoginResponse:
+      title: LoginResponse
+      type: object
+      properties:
+        accessUrl:
+          type: string
+      required:
+        - accessUrl
